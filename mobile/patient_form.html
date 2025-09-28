@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Royal Perth ED - Emergency Check-in</title>
+    <link rel="stylesheet" href="mobile_styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="hospital-logo">🏥</div>
+            <h1>Royal Perth ED</h1>
+            <p class="subtitle">Emergency Department Check-in</p>
+            <div class="status-bar">
+                <span class="status-dot active"></span>
+                <span class="status-text" id="connection-status">Connecting...</span>
+            </div>
+        </header>
+
+        <!-- Main Form -->
+        <div class="form-container" id="patient-form">
+            <div class="form-section">
+                <h2>📋 Patient Information</h2>
+                
+                <div class="input-group">
+                    <label for="age">Age (years)</label>
+                    <input type="number" id="age" min="0" max="120" value="35" required>
+                </div>
+                
+                <div class="input-group">
+                    <label for="arrival-method">How did you arrive?</label>
+                    <select id="arrival-method" required>
+                        <option value="Walk-in">Walk-in</option>
+                        <option value="Ambulance">Ambulance</option>
+                        <option value="Police/Fire">Police/Fire</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label for="hospital-type">Typical Hospital</label>
+                    <select id="hospital-type" required>
+                        <option value="">Select hospital type...</option>
+                        <option value="metro">Metropolitan Hospital</option>
+                        <option value="rural">Rural Hospital</option>
+                    </select>
+                </div>
+                
+                <div class="input-group">
+                    <label for="pain-level">Pain Level (0-10)</label>
+                    <div class="pain-scale">
+                        <input type="range" id="pain-level" min="0" max="10" value="5">
+                        <div class="pain-labels">
+                            <span>No Pain</span>
+                            <span id="pain-value">5</span>
+                            <span>Severe</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h2>🩺 Current Symptoms</h2>
+                <p class="section-subtitle">Select all that apply</p>
+                
+                <div class="checkbox-grid">
+                    <label class="checkbox-item">
+                        <input type="checkbox" id="chest-pain">
+                        <span class="checkmark">💔</span>
+                        <span class="label-text">Chest Pain</span>
+                    </label>
+                    
+                    <label class="checkbox-item">
+                        <input type="checkbox" id="shortness-breath">
+                        <span class="checkmark">🫁</span>
+                        <span class="label-text">Shortness of Breath</span>
+                    </label>
+                    
+                    <label class="checkbox-item">
+                        <input type="checkbox" id="abdominal-pain">
+                        <span class="checkmark">🤱</span>
+                        <span class="label-text">Abdominal Pain</span>
+                    </label>
+                    
+                    <label class="checkbox-item">
+                        <input type="checkbox" id="head-injury">
+                        <span class="checkmark">🧠</span>
+                        <span class="label-text">Head Injury</span>
+                    </label>
+                    
+                    <label class="checkbox-item">
+                        <input type="checkbox" id="altered-mental">
+                        <span class="checkmark">🤔</span>
+                        <span class="label-text">Confusion/Altered Mental State</span>
+                    </label>
+                    
+                    <label class="checkbox-item">
+                        <input type="checkbox" id="nausea-vomiting">
+                        <span class="checkmark">🤢</span>
+                        <span class="label-text">Nausea/Vomiting</span>
+                    </label>
+                    
+                    <label class="checkbox-item">
+                        <input type="checkbox" id="broken-bone">
+                        <span class="checkmark">🦴</span>
+                        <span class="label-text">Broken Bone/Fracture</span>
+                    </label>
+                    
+                    <label class="checkbox-item">
+                        <input type="checkbox" id="other-complaint">
+                        <span class="checkmark">❓</span>
+                        <span class="label-text">Other</span>
+                    </label>
+                </div>
+                
+                <div class="input-group" id="other-description" style="display: none;">
+                    <label for="other-text">Please describe:</label>
+                    <textarea id="other-text" placeholder="Describe your other symptoms..."></textarea>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h2>🩸 Vital Signs (if known)</h2>
+                <p class="section-subtitle">Leave blank if unknown</p>
+                
+                <div class="vitals-grid">
+                    <div class="input-group">
+                        <label for="heart-rate">Heart Rate (bpm)</label>
+                        <input type="number" id="heart-rate" min="40" max="200" placeholder="e.g. 80">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="blood-pressure">Blood Pressure</label>
+                        <input type="text" id="blood-pressure" placeholder="e.g. 120/80">
+                    </div>
+                </div>
+            </div>
+
+            <button class="checkin-button" id="submit-button">
+                <span class="button-icon">🏥</span>
+                CHECK IN TO ED
+                <span class="button-arrow">→</span>
+            </button>
+        </div>
+
+        <!-- Status Screen -->
+        <div class="status-container" id="status-screen" style="display: none;">
+            <div class="status-header">
+                <div class="success-icon">✅</div>
+                <h2>Check-in Successful!</h2>
+                <p class="patient-id">Patient ID: <span id="patient-id-display"></span></p>
+            </div>
+            
+            <div class="status-cards">
+                <div class="status-card priority">
+                    <h3>Priority Level</h3>
+                    <div class="priority-badge" id="priority-display">P2</div>
+                    <p class="status-subtitle">Moderate Priority</p>
+                </div>
+                
+                <div class="status-card queue">
+                    <h3>Queue Position</h3>
+                    <div class="queue-number" id="queue-position">#23</div>
+                    <p class="status-subtitle">patients ahead</p>
+                </div>
+                
+                <div class="status-card time">
+                    <h3>Estimated Wait</h3>
+                    <div class="wait-time" id="estimated-wait">2.5 hrs</div>
+                    <p class="status-subtitle">approximate</p>
+                </div>
+            </div>
+            
+            <div class="live-updates">
+                <h3>📡 Live Updates</h3>
+                <div class="updates-list" id="updates-list">
+                    <div class="update-item">
+                        <span class="update-time">15:23</span>
+                        <span class="update-text">Checked in successfully</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="ed-status">
+                <h3>🏥 ED Status</h3>
+                <div class="ed-metrics">
+                    <div class="metric">
+                        <span class="metric-label">Current Capacity:</span>
+                        <span class="metric-value" id="ed-capacity">67%</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Average Wait:</span>
+                        <span class="metric-value" id="ed-wait">2.1 hrs</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Crisis Alert -->
+        <div class="crisis-alert" id="crisis-alert" style="display: none;">
+            <div class="alert-content">
+                <span class="alert-icon">🚨</span>
+                <span class="alert-text" id="alert-message">ED at critical capacity!</span>
+            </div>
+        </div>
+    </div>
+
+    <script src="qr_handler.js"></script>
+</body>
+</html>

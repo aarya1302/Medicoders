@@ -1,0 +1,34 @@
+# Live ED Simulation Requirements
+# Core packages for real-time simulation
+
+# WebSocket server
+websockets==11.0.3
+fastapi==0.104.1
+uvicorn==0.24.0
+
+# Real-time ML and data processing
+scikit-learn
+pandas
+numpy
+
+# Streamlit dashboard
+streamlit==1.28.2
+plotly==5.17.0
+
+# QR Code generation
+qrcode[pil]==7.4.2
+pillow
+
+# Database
+#sqlite3  # Built-in with Python
+
+# Existing requirements from original project
+#kagglehub==0.2.8
+#matplotlib==3.8.2
+#seaborn==0.13.0
+
+# Additional utilities
+python-dotenv
+websocket
+kagglehub
+pyreadr

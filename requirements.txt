@@ -1,0 +1,12 @@
+kagglehub
+pandas
+numpy
+matplotlib
+seaborn
+pyreadr
+scikit-learn
+simpy
+streamlit
+plotly
+qrcode
+websocket

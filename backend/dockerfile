@@ -1,0 +1,14 @@
+FROM python:3.11-slim
+
+WORKDIR /app
+
+COPY . /app/backend
+
+RUN pip install --no-cache-dir -r /app/backend/requirements.txt
+RUN pip install --no-cache-dir -r /app/backend/requirements_live.txt
+
+WORKDIR /app/backend
+
+EXPOSE 8765
+
+CMD ["python3", "-c", "from websocket_server import run_server; run_server()"]
