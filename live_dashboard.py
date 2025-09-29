@@ -329,17 +329,20 @@ class ExternalWebSocketManager:
 
             # Wait for connection with timeout
             print("⏳ Waiting for WebSocket connection...")
-            max_wait = 30  # seconds
+            max_wait = 60  # seconds
             wait_interval = 0.5
             elapsed = 0
 
             while elapsed < max_wait:
                 time.sleep(wait_interval)
                 elapsed += wait_interval
+                print("self.is_client_running()", self.is_client_running())
+                print("self.check_connection_status()", self.check_connection_status())
 
                 # Check if process is running and connection is established
                 if self.is_client_running() and self.check_connection_status():
                     print("✅ External WebSocket client connected")
+                   
                     self.ws_connected = True
                     break
                 elif elapsed >= 2:  # Start checking connection status after 2 seconds

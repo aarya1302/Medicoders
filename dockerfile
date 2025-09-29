@@ -10,11 +10,16 @@ COPY . /app
 # Install dependencies
 RUN pip install --no-cache-dir -r requirements_live.txt
 
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends procps && \
+    rm -rf /var/lib/apt/lists/*
+
 # Expose the ports your services use
 EXPOSE 8501 8000 8765
 
 # Run your script
-CMD ["python", "start_simulation.py"]
+# CMD ["python", "start_simulation.py"]
+CMD ["streamlit", "run", "live_dashboard.py"]
 # FROM python:3.11-slim
 
 # WORKDIR /app
