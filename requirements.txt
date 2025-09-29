@@ -9,4 +9,4 @@ simpy
 streamlit
 plotly
 qrcode
-websocket
+websockets

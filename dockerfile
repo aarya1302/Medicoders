@@ -9,6 +9,7 @@ COPY . /app
 
 # Install dependencies
 RUN pip install --no-cache-dir -r requirements_live.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends procps && \
